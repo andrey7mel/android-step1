@@ -135,7 +135,7 @@ public class RepoListPresenterTest extends BaseTest {
         repoListPresenter.onCreateView(null);
         repoListPresenter.onSearchButtonClick();
 
-        Bundle bundle = Bundle.EMPTY;
+        Bundle bundle = new Bundle();
         repoListPresenter.onSaveInstanceState(bundle);
         repoListPresenter.onStop();
 

@@ -3,7 +3,6 @@ package com.andrey7mel.stepbystep.integration.other.di;
 import com.andrey7mel.stepbystep.integration.other.IntegrationApiModule;
 import com.andrey7mel.stepbystep.model.api.ApiInterface;
 import com.andrey7mel.stepbystep.other.Const;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
 
 import java.io.IOException;
 
@@ -12,6 +11,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.mockwebserver.MockWebServer;
 import rx.Scheduler;
 import rx.schedulers.Schedulers;
 

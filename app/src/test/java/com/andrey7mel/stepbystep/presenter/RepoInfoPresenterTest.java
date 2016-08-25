@@ -143,7 +143,6 @@ public class RepoInfoPresenterTest extends BaseTest {
         verify(mockView, times(2)).showError(TestConst.TEST_ERROR);
         verify(mockView, never()).showBranches(any());
         verify(mockView, never()).showContributors(contributorList);
-
     }
 
 
@@ -151,7 +150,7 @@ public class RepoInfoPresenterTest extends BaseTest {
     public void testSaveState() {
         repoInfoPresenter.onCreateView(null);
 
-        Bundle bundle = Bundle.EMPTY;
+        Bundle bundle = new Bundle();
         repoInfoPresenter.onSaveInstanceState(bundle);
         repoInfoPresenter.onStop();
 

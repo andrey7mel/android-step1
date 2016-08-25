@@ -1,5 +1,6 @@
 package com.andrey7mel.stepbystep.integration.view;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -46,7 +47,7 @@ public class RepoInfoFragmentTest extends IntegrationBaseTest {
         component.inject(this);
         repoInfoFragment = spy(RepoInfoFragment.newInstance(repository));
         activity = Robolectric.setupActivity(MainActivity.class);
-        repoInfoFragment.onAttach(activity);
+        repoInfoFragment.onAttach((Context) activity);
     }
 
 

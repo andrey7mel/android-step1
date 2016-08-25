@@ -1,6 +1,6 @@
 package com.andrey7mel.stepbystep.view.fragments;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.andrey7mel.stepbystep.presenter.Presenter;
@@ -21,16 +21,17 @@ public abstract class BaseFragment extends Fragment implements View {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
         try {
-            activityCallback = (ActivityCallback) activity;
+            activityCallback = (ActivityCallback) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement activityCallback");
+            throw new ClassCastException(
+                    context.toString() + " must implement activityCallback");
         }
     }
+
     @Override
     public void showLoading() {
         activityCallback.showProgressBar();

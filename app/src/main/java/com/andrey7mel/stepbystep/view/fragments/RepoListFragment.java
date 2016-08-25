@@ -1,6 +1,7 @@
 package com.andrey7mel.stepbystep.view.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -27,19 +28,19 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RepoListFragment extends BaseFragment implements RepoListView {
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     protected RecyclerView recyclerView;
 
-    @Bind(R.id.edit_text)
+    @BindView(R.id.edit_text)
     protected EditText editText;
 
-    @Bind(R.id.button_search)
+    @BindView(R.id.button_search)
     protected Button searchButton;
 
     @Inject
@@ -59,14 +60,14 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
         try {
-            activityCallback = (ActivityCallback) activity;
+            activityCallback = (ActivityCallback) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement activityCallback");
+            throw new ClassCastException(
+                    context.toString() + " must implement activityCallback");
         }
     }
 
@@ -141,5 +142,4 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
         super.onSaveInstanceState(outState);
         presenter.onSaveInstanceState(outState);
     }
-
 }

@@ -2,10 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 
-
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -14,73 +13,100 @@ android {
 
     defaultConfig {
         applicationId "com.andrey7mel.stepbystep"
-        minSdkVersion 15
-        targetSdkVersion 22
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "com.andrey7mel.stepbystep.tools.MockTestRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled = true
         }
     }
 
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
+        warning 'InvalidPackage'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
+        exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
-    compile 'com.squareup.okhttp:logging-interceptor:2.7.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.google.dagger:dagger:2.0'
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
 
-    testApt 'com.google.dagger:dagger-compiler:2.0.2'
-    testCompile 'org.robolectric:robolectric:3.0'
-    testCompile 'com.squareup.okhttp:mockwebserver:2.7.0'
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion"
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpVersion"
+    compile 'com.jakewharton:butterknife:8.2.1'
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    compile "com.google.guava:guava:$rootProject.guavaVersion"
+
+    apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    apt "com.jakewharton:butterknife-compiler:8.2.1"
+
+    testApt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    testCompile 'org.robolectric:robolectric:3.1.2'
+    testCompile "com.squareup.okhttp3:mockwebserver:$rootProject.okhttpVersion"
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
 
-    androidTestApt 'com.google.dagger:dagger-compiler:2.0.2'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
-    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2') {
-        // Necessary to avoid version conflicts
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude module: 'recyclerview-v7'
+    androidTestApt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    androidTestCompile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion")
+    {
+      // Necessary to avoid version conflicts
+      exclude group: 'com.android.support', module: 'design'
+      exclude group: 'com.android.support', module: 'appcompat-v7'
+      exclude group: 'com.android.support', module: 'support-v4'
+      exclude group: 'com.android.support', module: 'support-annotations'
+      exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
-    androidTestCompile 'com.google.truth:truth:0.25'
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.3'
-    androidTestCompile 'com.android.support:support-annotations:23.1.1'
-    androidTestCompile 'com.squareup.okhttp:mockwebserver:2.7.0'
+    androidTestCompile 'com.google.truth:truth:0.29'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile "com.squareup.okhttp3:mockwebserver:$rootProject.okhttpVersion"
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+}
 
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
 }
 
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.7.1.201405082137"
+    toolVersion = "0.7.7.201606060606"
 }
 
 def coverageSourceDirs = [
-        '../app/src/main/java'
+    'src/main/java'
 ]
 
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
@@ -89,7 +115,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
     description = "Generate Jacoco coverage reports"
 
     classDirectories = fileTree(
-            dir: '../app/build/intermediates/classes/debug',
+            dir: 'build/intermediates/classes/debug',
             excludes: ['**/R.class',
                        '**/R$*.class',
                        '**/*$ViewInjector*.*',
@@ -109,11 +135,10 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
 
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files('../app/build/jacoco/testDebugUnitTest.exec')
+    executionData = files('build/jacoco/testDebugUnitTest.exec')
 
     reports {
         xml.enabled = true
         html.enabled = true
     }
-
 }

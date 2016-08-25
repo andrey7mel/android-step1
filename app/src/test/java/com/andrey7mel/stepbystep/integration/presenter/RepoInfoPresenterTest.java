@@ -103,7 +103,7 @@ public class RepoInfoPresenterTest extends IntegrationBaseTest {
     public void testSaveState() {
         repoInfoPresenter.onCreateView(null);
 
-        Bundle bundle = Bundle.EMPTY;
+        Bundle bundle = new Bundle();
         repoInfoPresenter.onSaveInstanceState(bundle);
         repoInfoPresenter.onStop();
 
@@ -182,6 +182,4 @@ public class RepoInfoPresenterTest extends IntegrationBaseTest {
 
         verify(mockView).hideLoading();
     }
-
-
 }
