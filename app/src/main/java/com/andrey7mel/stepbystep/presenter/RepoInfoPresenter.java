@@ -3,6 +3,7 @@ package com.andrey7mel.stepbystep.presenter;
 import android.os.Bundle;
 
 import com.andrey7mel.stepbystep.other.App;
+import com.andrey7mel.stepbystep.other.EspressoIdlingResource;
 import com.andrey7mel.stepbystep.presenter.mappers.RepoBranchesMapper;
 import com.andrey7mel.stepbystep.presenter.mappers.RepoContributorsMapper;
 import com.andrey7mel.stepbystep.presenter.vo.Branch;
@@ -45,17 +46,20 @@ public class RepoInfoPresenter extends BasePresenter {
         String name = repository.getRepoName();
 
         showLoadingState();
+        EspressoIdlingResource.increment();
         Subscription subscriptionBranches = model.getRepoBranches(owner, name)
                 .map(branchesMapper)
                 .subscribe(new Observer<List<Branch>>() {
                     @Override
                     public void onCompleted() {
                         hideInfoLoadingState();
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         hideInfoLoadingState();
+                        EspressoIdlingResource.decrement();
                         showError(e);
                     }
 
@@ -67,17 +71,20 @@ public class RepoInfoPresenter extends BasePresenter {
                 });
         addSubscription(subscriptionBranches);
 
+        EspressoIdlingResource.increment();
         Subscription subscriptionContributors = model.getRepoContributors(owner, name)
                 .map(contributorsMapper)
                 .subscribe(new Observer<List<Contributor>>() {
                     @Override
                     public void onCompleted() {
                         hideInfoLoadingState();
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         hideInfoLoadingState();
+                        EspressoIdlingResource.decrement();
                         showError(e);
                     }
 

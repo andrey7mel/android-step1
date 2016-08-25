@@ -24,23 +24,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RepoInfoFragment extends BaseFragment implements RepoInfoView {
 
     private static final String BUNDLE_REPO_KEY = "BUNDLE_REPO_KEY";
 
-    @Bind(R.id.repo_info)
+    @BindView(R.id.repo_info)
     protected TextView info;
 
-    @Bind(R.id.recycler_view_branches)
+    @BindView(R.id.recycler_view_branches)
     protected RecyclerView branchesRecyclerView;
 
-    @Bind(R.id.recycler_view_contributors)
+    @BindView(R.id.recycler_view_contributors)
     protected RecyclerView contributorsRecyclerView;
 
-    @Bind(R.id.linear_layout)
+    @BindView(R.id.linear_layout)
     protected View layout;
 
     @Inject

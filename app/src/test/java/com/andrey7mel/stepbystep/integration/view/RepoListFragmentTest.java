@@ -1,5 +1,6 @@
 package com.andrey7mel.stepbystep.integration.view;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -39,11 +40,10 @@ public class RepoListFragmentTest extends IntegrationBaseTest {
 
         repoListFragment = spy(new RepoListFragment());
         activity = Robolectric.setupActivity(MainActivity.class);
-        repoListFragment.onAttach(activity);
+        repoListFragment.onAttach((Context) activity);
         doAnswer(invocation -> TestConst.TEST_OWNER)
                 .when(repoListFragment)
                 .getUserName();
-
     }
 
     @Test

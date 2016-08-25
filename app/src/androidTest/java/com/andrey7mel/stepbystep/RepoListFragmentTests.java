@@ -1,9 +1,10 @@
 package com.andrey7mel.stepbystep;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
 
 import com.andrey7mel.stepbystep.di.TestComponent;
 import com.andrey7mel.stepbystep.other.App;
@@ -36,13 +37,15 @@ import static org.hamcrest.core.AllOf.allOf;
 public class RepoListFragmentTests {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @Inject
     ApiConfig apiConfig;
 
     @Before
     public void setUp() {
+        Espresso.registerIdlingResources(
+                mActivityRule.getActivity().getCountingIdlingResource());
         ((TestComponent) App.getComponent()).inject(this);
     }
 
@@ -98,6 +101,4 @@ public class RepoListFragmentTests {
         onView(withId(R.id.edit_text)).perform(typeText(TestConst.TEST_OWNER));
         onView(withId(R.id.button_search)).perform(click());
     }
-
-
 }

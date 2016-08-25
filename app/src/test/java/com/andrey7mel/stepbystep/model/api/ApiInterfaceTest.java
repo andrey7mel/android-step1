@@ -5,11 +5,6 @@ import com.andrey7mel.stepbystep.model.dto.ContributorDTO;
 import com.andrey7mel.stepbystep.model.dto.RepositoryDTO;
 import com.andrey7mel.stepbystep.other.BaseTest;
 import com.andrey7mel.stepbystep.other.TestConst;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +12,11 @@ import org.junit.Test;
 
 import java.util.List;
 
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import rx.observers.TestSubscriber;
 
 import static org.junit.Assert.assertEquals;
@@ -80,7 +80,7 @@ public class ApiInterfaceTest extends BaseTest {
             apiInterface.getRepositories("IncorrectRequest").subscribe();
             fail();
         } catch (Exception expected) {
-            assertEquals("HTTP 404 OK", expected.getMessage());
+            assertEquals(TestConst.ERROR_RESPONSE_404, expected.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class ApiInterfaceTest extends BaseTest {
             apiInterface.getContributors("BBB", "AAA").subscribe();
             fail();
         } catch (Exception expected) {
-            assertEquals("HTTP 404 OK", expected.getMessage());
+            assertEquals(TestConst.ERROR_RESPONSE_404, expected.getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ public class ApiInterfaceTest extends BaseTest {
             apiInterface.getContributors("A", "B").subscribe();
             fail();
         } catch (Exception expected) {
-            assertEquals("HTTP 404 OK", expected.getMessage());
+            assertEquals(TestConst.ERROR_RESPONSE_404, expected.getMessage());
         }
     }
 

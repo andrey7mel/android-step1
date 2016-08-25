@@ -1,12 +1,12 @@
 package com.andrey7mel.stepbystep.model.api;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
 public final class ApiModule {
 
@@ -20,10 +20,10 @@ public final class ApiModule {
 
     public static ApiInterface getApiInterface(String url) {
 
-        OkHttpClient httpClient = new OkHttpClient();
+        OkHttpClient.Builder httpBuilder = new OkHttpClient.Builder();
 
         if (ENABLE_AUTH) {
-            httpClient.interceptors().add(chain -> {
+            httpBuilder.addInterceptor(chain -> {
                 Request original = chain.request();
                 Request request = original.newBuilder()
                         .header("Authorization", "Basic " + AUTH_64)
@@ -37,7 +37,7 @@ public final class ApiModule {
         if (ENABLE_LOG) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            httpClient.interceptors().add(interceptor);
+            httpBuilder.addInterceptor(interceptor);
         }
 
         Retrofit.Builder builder = new Retrofit.Builder().
@@ -45,10 +45,10 @@ public final class ApiModule {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
+        OkHttpClient httpClient = httpBuilder.build();
         builder.client(httpClient);
 
-        ApiInterface apiInterface = builder.build().create(ApiInterface.class);
-        return apiInterface;
+        return builder.build().create(ApiInterface.class);
     }
 
 }

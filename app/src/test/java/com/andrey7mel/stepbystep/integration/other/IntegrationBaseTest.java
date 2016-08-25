@@ -3,26 +3,29 @@ package com.andrey7mel.stepbystep.integration.other;
 import com.andrey7mel.stepbystep.BuildConfig;
 import com.andrey7mel.stepbystep.integration.other.di.IntegrationTestComponent;
 import com.andrey7mel.stepbystep.other.App;
+import com.andrey7mel.stepbystep.other.ShadowSnackbar;
 import com.andrey7mel.stepbystep.other.TestConst;
 import com.andrey7mel.stepbystep.other.TestUtils;
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import javax.inject.Inject;
 
-@RunWith(RobolectricGradleTestRunner.class)
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+
+@RunWith(RobolectricTestRunner.class)
 @Config(application = IntegrationTestApp.class,
         constants = BuildConfig.class,
-        sdk = 21)
+        sdk = 23,
+        shadows = {ShadowSnackbar.class})
 @Ignore
 public class IntegrationBaseTest {
 
@@ -71,7 +74,5 @@ public class IntegrationBaseTest {
                 return new MockResponse().setResponseCode(404);
             }
         });
-
     }
-
 }

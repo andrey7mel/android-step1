@@ -1,5 +1,8 @@
 package com.andrey7mel.stepbystep.view.fragments;
 
+import android.content.Context;
+
+import com.andrey7mel.stepbystep.BuildConfig;
 import com.andrey7mel.stepbystep.other.BaseTest;
 import com.andrey7mel.stepbystep.presenter.BasePresenter;
 import com.andrey7mel.stepbystep.presenter.vo.Repository;
@@ -7,6 +10,9 @@ import com.andrey7mel.stepbystep.view.MainActivity;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import javax.inject.Inject;
 
@@ -18,6 +24,7 @@ public class BaseFragmentTest extends BaseTest {
 
     @Inject
     protected Repository repository;
+
     private BaseFragment baseFragment;
     private MainActivity activity;
     private BasePresenter basePresenter;
@@ -33,7 +40,7 @@ public class BaseFragmentTest extends BaseTest {
         RepoInfoFragment repoInfoFragment = RepoInfoFragment.newInstance(repository);
         baseFragment = repoInfoFragment;
         baseFragment.onCreate(null); //for Di
-        baseFragment.onAttach(activity); //for link activity
+        baseFragment.onAttach((Context) activity); //for link activity
 
         basePresenter = repoInfoFragment.presenter;
     }

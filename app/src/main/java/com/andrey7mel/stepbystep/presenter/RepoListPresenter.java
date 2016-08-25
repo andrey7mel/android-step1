@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.andrey7mel.stepbystep.other.App;
+import com.andrey7mel.stepbystep.other.EspressoIdlingResource;
 import com.andrey7mel.stepbystep.presenter.mappers.RepoListMapper;
 import com.andrey7mel.stepbystep.presenter.vo.Repository;
 import com.andrey7mel.stepbystep.view.fragments.RepoListView;
@@ -48,6 +49,7 @@ public class RepoListPresenter extends BasePresenter {
         if (TextUtils.isEmpty(name)) return;
 
         showLoadingState();
+        EspressoIdlingResource.increment();
         Subscription subscription = model.getRepoList(name)
                 .map(repoListMapper)
                 .subscribe(new Observer<List<Repository>>() {
@@ -55,11 +57,13 @@ public class RepoListPresenter extends BasePresenter {
                     @Override
                     public void onCompleted() {
                         hideLoadingState();
+                        EspressoIdlingResource.decrement();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         hideLoadingState();
+                        EspressoIdlingResource.decrement();
                         showError(e);
                     }
 

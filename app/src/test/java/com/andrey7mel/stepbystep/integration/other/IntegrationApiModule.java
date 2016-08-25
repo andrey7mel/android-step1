@@ -4,13 +4,14 @@ import com.andrey7mel.stepbystep.model.api.ApiInterface;
 import com.andrey7mel.stepbystep.model.api.ApiModule;
 import com.andrey7mel.stepbystep.other.TestConst;
 import com.andrey7mel.stepbystep.other.TestUtils;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.mockwebserver.Dispatcher;
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
-import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 public class IntegrationApiModule {
 
